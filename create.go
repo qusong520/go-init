@@ -7,8 +7,7 @@ import (
 	"strings"
 )
 
-// TODO: 修改为当前目录
-const parentDir = "/Users/alfred/Desktop"
+const parentDir = "."
 
 const (
 	makefileName    = "Makefile"

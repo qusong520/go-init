@@ -3,6 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+)
+
+const (
+	exitCodeCreateRootFail       = 1
+	exitCodeCreateMakefileFail   = 2
+	exitCodeCreateReadmeFail     = 3
+	exitCodeCreateRunScriptsFail = 4
 )
 
 // arguments to create the project
@@ -23,10 +31,44 @@ func main() {
 		launchInteractiveMode(&args)
 	}
 
-	fmt.Printf("%#v\n", args)
+	// create the root directory of the project
+	projectPath, err := createRootDir(args.ProjectName)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(exitCodeCreateRootFail)
+	}
+
+	// Makefile
+	if args.GenerateMakefile {
+		_, err := createMakefile(projectPath, args.ProjectName)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(exitCodeCreateMakefileFail)
+		}
+	}
+
+	// Readme
+	if args.GenerateReadme {
+		_, err := createReadme(projectPath, args.ProjectName)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(exitCodeCreateReadmeFail)
+		}
+	}
+
+	// Run scripts
+	if args.GenerateRunScripts {
+		err := createRunScripts(projectPath, args.ProjectName)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(exitCodeCreateRunScriptsFail)
+		}
+	}
+
+	fmt.Printf("Project created: %s\n", args.ProjectName)
 }
 
-// parsing the args
+// Parsing the args
 func parseArgs() (args Args) {
 	flag.BoolVar(&args.GenerateMakefile, "m", true, "generate the Makefile")
 	flag.BoolVar(&args.GenerateReadme, "r", true, "generate the README.md")

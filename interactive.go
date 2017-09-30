@@ -28,7 +28,7 @@ func launchInteractiveMode(args *Args) {
 	args.GenerateRunScripts = readYesOrNo(runScriptsPrint, reader)
 }
 
-// read from the reader and get the first not empty string
+// Read from the reader and get the first not empty string
 func readNotEmptyString(print string, reader *bufio.Reader) (result string) {
 	for result == "" {
 		fmt.Printf(print)
@@ -39,7 +39,7 @@ func readNotEmptyString(print string, reader *bufio.Reader) (result string) {
 	return
 }
 
-// read from the reader and get the first not empty string as yes or no.
+// Read from the reader and get the first not empty string as yes or no.
 // y/Y/yes/YES return true, n/N/No/NO return false. Empty also treated as y.
 func readYesOrNo(print string, reader *bufio.Reader) bool {
 	s := ""

@@ -1,2 +1,2 @@
 # go-init
-Go program init program
+Go project init program

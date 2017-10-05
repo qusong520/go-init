@@ -13,6 +13,12 @@ const (
 	exitCodeCreateRunScriptsFail = 4
 )
 
+const (
+	flagVarM = "generate the Makefile"
+	flagVarR = "generate the README.md"
+	flagVarS = "generate the scripts to start/stop the program"
+)
+
 // arguments to create the project
 type Args struct {
 	ProjectName string // name of the project to be created
@@ -70,9 +76,9 @@ func main() {
 
 // Parsing the args
 func parseArgs() (args Args) {
-	flag.BoolVar(&args.GenerateMakefile, "m", true, "generate the Makefile")
-	flag.BoolVar(&args.GenerateReadme, "r", true, "generate the README.md")
-	flag.BoolVar(&args.GenerateRunScripts, "s", true, "generate the scripts to start/stop the program")
+	flag.BoolVar(&args.GenerateMakefile, "m", true, flagVarM)
+	flag.BoolVar(&args.GenerateReadme, "r", true, flagVarR)
+	flag.BoolVar(&args.GenerateRunScripts, "s", true, flagVarS)
 	flag.Parse()
 
 	if flag.NArg() > 0 {
@@ -81,10 +87,4 @@ func parseArgs() (args Args) {
 		args.InteractiveMode = true
 	}
 	return
-}
-
-func PanicOnError(err error) {
-	if err != nil {
-		panic(err)
-	}
 }
